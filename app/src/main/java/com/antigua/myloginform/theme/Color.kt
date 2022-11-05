@@ -1,4 +1,4 @@
-package com.antigua.myloginform.ui.theme
+package com.antigua.myloginform.theme
 
 import androidx.compose.ui.graphics.Color
 import android.graphics.Color as GColor

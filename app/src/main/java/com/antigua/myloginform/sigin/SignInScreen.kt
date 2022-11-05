@@ -1,7 +1,6 @@
-package com.antigua.myloginform.ui
+package com.antigua.myloginform.sigin
 
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -24,33 +23,34 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.antigua.myloginform.R
-import com.antigua.myloginform.ui.theme.darkBlue
-import com.antigua.myloginform.ui.theme.strongBlue
+import com.antigua.myloginform.theme.darkBlue
+import com.antigua.myloginform.theme.strongBlue
 
-@Preview(showSystemUi = true)
+//@Preview(showSystemUi = true)
 @Composable
-fun LoginScreen() {
+fun SignInScreen(
+    signIn: (username: String ,password: String) ->Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        val emailState = remember { EmailState() }
+        val usernameState = remember { UsernameState() }
         val passwordState = remember { PasswordState() }
         val localFocusManager = LocalFocusManager.current
         Title()
         // Email
-        Email(
-            email = emailState.text,
-            error = emailState.error,
-            onEmailChanged = {
-                emailState.text = it
-                emailState.validate()
+        Username(
+            username = usernameState.text,
+            error = usernameState.error,
+            onUsernameChanged = {
+                usernameState.text = it
+                usernameState.validate()
             },
             onImeAction = {
                 localFocusManager.moveFocus(FocusDirection.Down)
@@ -66,23 +66,21 @@ fun LoginScreen() {
             },
             onImeAction = {
                 localFocusManager.clearFocus()
-                if(emailState.isValid() && passwordState.isValid()){
-                    signIn(emailState.text, passwordState.text)
+                if(usernameState.isValid() && passwordState.isValid()){
+                    signIn(usernameState.text, passwordState.text)
                 }
             },
         )
         // Button
-        SignInButton(
-            enabled = (emailState.isValid() && passwordState.isValid()),
-            email = emailState.text,
-            password = passwordState.text
-        )
+        SignInButton(enabled = usernameState.isValid() && passwordState.isValid()){
+            signIn(usernameState.text, passwordState.text)
+        }
     }
 }
 
-fun signIn(email: String, password: String) {
-Log.d("TEST","email $email, password $password")
-}
+//fun signIn(email: String, password: String) {
+//Log.d("TEST","email $email, password $password")
+//}
 
 @Composable
 fun Title() {
@@ -97,18 +95,18 @@ fun Title() {
 }
 
 @Composable
-fun Email(
-    email : String,
+fun Username(
+    username : String,
     error: String?,
-    onEmailChanged: (String)->Unit,
+    onUsernameChanged: (String)->Unit,
     onImeAction: () -> Unit
     ) {
     Column {
         TextField(
             modifier = Modifier.fillMaxWidth(),
-            value = email,
-            onValueChange = { onEmailChanged(it) },
-            label = { Text(text = stringResource(R.string.email_hint)) },
+            value = username,
+            onValueChange = { onUsernameChanged(it) },
+            label = { Text(text = stringResource(R.string.username_hint)) },
             singleLine = true,
             colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = Color.Transparent,
@@ -195,9 +193,9 @@ fun ErrorField(error: String) {
 }
 
 @Composable
-fun SignInButton(enabled: Boolean, email: String, password: String) {
+fun SignInButton(enabled: Boolean, function: () -> Unit) {
     Button(
-        onClick = { signIn(email, password)  },
+        onClick = { function()  },
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(16.dp),
         colors = ButtonDefaults.buttonColors(

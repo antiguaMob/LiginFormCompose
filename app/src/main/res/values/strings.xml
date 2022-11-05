@@ -2,7 +2,7 @@
     <string name="app_name">MyLoginForm</string>
     <string name="sign_in_welcome_text">Hello Again!\nWelcome\nback</string>
     <string name="sign_in">Sing in</string>
-    <string name="email_hint">Email address</string>
+    <string name="username_hint">User name</string>
     <string name="password_hint">Password</string>
     <string name="hide_password">Hide password</string>
     <string name="show_password">Show password</string>

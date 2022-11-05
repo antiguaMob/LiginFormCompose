@@ -1,4 +1,4 @@
-package com.antigua.myloginform.ui
+package com.antigua.myloginform.sigin
 
 class PasswordState: TextFieldState(
     validator = ::isPasswordValid  ,

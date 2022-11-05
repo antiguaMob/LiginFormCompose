@@ -23,15 +23,23 @@ package com.antigua.myloginform
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.antigua.myloginform.ui.LoginScreen
-import com.antigua.myloginform.ui.theme.MyLoginFormTheme
+import androidx.activity.viewModels
+import com.antigua.myloginform.sigin.SignInScreen
+import com.antigua.myloginform.sigin.SignInViewModel
+import com.antigua.myloginform.sigin.SignInViewModelFactory
+import com.antigua.myloginform.theme.MyLoginFormTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: SignInViewModel by viewModels{ SignInViewModelFactory() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyLoginFormTheme {
-                LoginScreen()
+                SignInScreen{ username: String ,password: String ->
+                    viewModel.signIn(username,password)
+                }
             }
         }
     }

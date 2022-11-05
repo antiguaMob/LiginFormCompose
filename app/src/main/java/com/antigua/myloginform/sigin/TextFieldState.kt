@@ -1,4 +1,4 @@
-package com.antigua.myloginform.ui
+package com.antigua.myloginform.sigin
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
