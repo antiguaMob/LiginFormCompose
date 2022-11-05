@@ -15,7 +15,7 @@ class SignInViewModel(
 class SignInViewModelFactory: ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
        if(modelClass.isAssignableFrom(SignInViewModel::class.java)){
-           return SignInViewModel(GithubRepository) as T
+           return SignInViewModel(GithubRepository()) as T
        }
         throw IllegalArgumentException("Unknown  view model class")
     }
